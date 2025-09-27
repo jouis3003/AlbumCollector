@@ -2,7 +2,7 @@
 
 In this README file I will present the justifications for the choices made by me in the project
 
-First Decision - Jetpack Compose over XML layout files
+Jetpack Compose over XML layout files
 
 Jetpack Compose allows me to use:
     - Declarative UI Programming - this leads to less boilerplate as with XML you would often need to have multiple files/classes for a single view (for example - RecyclerView)
@@ -13,11 +13,11 @@ Jetpack Compose allows me to use:
     - Future-Proof - Google is investing heavily in Compose and it's bound to be the future of Android UI development
 
 
-
-Second Decision - Architecture 
+Architecture 
 
 I've decided to use an architecture based on the Clean Architecture Pattern and the MVVM Pattern.
 
 The project will have 3 main packages: data, di and ui
+
 
 
