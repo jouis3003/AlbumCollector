@@ -19,3 +19,5 @@ Second Decision - Architecture
 I've decided to use an architecture based on the Clean Architecture Pattern and the MVVM Pattern.
 
 The project will have 3 main packages: data, di and ui
+
+
