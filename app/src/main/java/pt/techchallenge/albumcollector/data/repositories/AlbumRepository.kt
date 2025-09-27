@@ -14,7 +14,7 @@ class AlbumRepository @Inject constructor(
     private val albumDao: AlbumDao
 ) {
 
-    suspend fun getAlbumsFromDatabase(): Flow<List<Album>> {
+    fun getAlbumsFromDatabase(): Flow<List<Album>> {
         return albumDao.getAllAlbums()
     }
 
