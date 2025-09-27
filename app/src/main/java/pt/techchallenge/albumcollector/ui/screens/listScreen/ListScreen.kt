@@ -1,6 +1,5 @@
 package pt.techchallenge.albumcollector.ui.screens.listScreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -20,12 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil3.compose.SubcomposeAsyncImage
 import pt.techchallenge.albumcollector.R
 import pt.techchallenge.albumcollector.data.models.Album
 import pt.techchallenge.albumcollector.ui.components.TopBar
@@ -96,8 +94,13 @@ private fun AlbumItem(album: Album) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(space = 16.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            //Coil Composable that allows loading images asynchronously
+            //https://coil-kt.github.io/coil/compose/#subcomposeasyncimage
+            SubcomposeAsyncImage(
+                model = album.thumbnailUrl,
+                loading = {
+                    CircularProgressIndicator()
+                },
                 contentDescription = stringResource(id = R.string.album_image)
             )
 
