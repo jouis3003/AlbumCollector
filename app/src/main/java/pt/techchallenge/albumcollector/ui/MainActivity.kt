@@ -1,4 +1,4 @@
-package pt.techchallenge.albumcollector
+package pt.techchallenge.albumcollector.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
