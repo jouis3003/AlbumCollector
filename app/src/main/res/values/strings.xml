@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AlbumCollector</string>
+
+    <!-- Content Descriptions -->
+    <string name="arrow_back_icon">Arrow Back Icon</string>
+    <string name="album_image">Album Image</string>
+
+    <!-- List Screen -->
+    <string name="list_screen_title">Album Collector</string>
 </resources>

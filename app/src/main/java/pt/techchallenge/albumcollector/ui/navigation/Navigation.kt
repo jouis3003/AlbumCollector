@@ -8,7 +8,7 @@ import pt.techchallenge.albumcollector.ui.screens.DetailsScreen
 import pt.techchallenge.albumcollector.ui.screens.ListScreen
 
 @Composable
-fun Navigation() {
+internal fun Navigation() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screens.ListScreen.name) {
@@ -21,7 +21,7 @@ fun Navigation() {
     }
 }
 
-enum class Screens {
+internal enum class Screens {
     ListScreen,
     DetailsScreen
 }

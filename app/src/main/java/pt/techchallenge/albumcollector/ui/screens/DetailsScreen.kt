@@ -7,12 +7,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 
 @Composable
-fun DetailsScreen(navController: NavController) {
-    DetailsScreen()
+internal fun DetailsScreen(navController: NavController) {
+    DetailsScreenContent()
 }
 
 @Preview
 @Composable
-private fun DetailsScreen(modifier: Modifier = Modifier) {
+private fun DetailsScreenContent(modifier: Modifier = Modifier) {
     Text(text = "Details Screen")
 }
