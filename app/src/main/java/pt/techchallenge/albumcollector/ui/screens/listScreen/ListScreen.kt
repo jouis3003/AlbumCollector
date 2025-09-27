@@ -1,4 +1,4 @@
-package pt.techchallenge.albumcollector.ui.screens
+package pt.techchallenge.albumcollector.ui.screens.listScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -13,46 +13,48 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import pt.techchallenge.albumcollector.R
 import pt.techchallenge.albumcollector.data.models.Album
 import pt.techchallenge.albumcollector.ui.components.TopBar
 
 @Composable
-internal fun ListScreen(navController: NavController) {
-    ListScreenContent()
+internal fun ListScreen(
+    navController: NavController,
+    viewModel: ListScreenViewModel = hiltViewModel()
+) {
+    ListScreenContent(navController = navController, viewModel = viewModel)
 }
 
-@Preview
 @Composable
-private fun ListScreenContent(modifier: Modifier = Modifier) {
+private fun ListScreenContent(navController: NavController, viewModel: ListScreenViewModel) {
 
-    val albums = listOf(
-        Album(1, 1, "Title 1", "URL 1", "Thumbnail URL 1"),
-        Album(2, 2, "Title 2", "URL 2", "Thumbnail URL 2"),
-        Album(3, 3, "Title 3", "URL 3", "Thumbnail URL 3")
-    )
+    val albums by viewModel.albums.collectAsState()
 
     Scaffold(
-        modifier = modifier.fillMaxSize(),
-        topBar = { TopBar() }
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            TopBar(navController = navController, isBackButtonVisible = false)
+        }
     ) { innerPadding ->
 
         LazyColumn(
-            modifier = modifier
+            modifier = Modifier
                 .padding(paddingValues = innerPadding)
                 .padding(all = 16.dp)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(space = 16.dp)
         ) {
-            items(items = albums) {
+            items(items = albums.data ?: emptyList()) {
                 AlbumItem(album = it)
             }
         }

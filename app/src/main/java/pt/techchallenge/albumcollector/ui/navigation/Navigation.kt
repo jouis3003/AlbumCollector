@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import pt.techchallenge.albumcollector.ui.screens.DetailsScreen
-import pt.techchallenge.albumcollector.ui.screens.ListScreen
+import pt.techchallenge.albumcollector.ui.screens.detailsScreen.DetailsScreen
+import pt.techchallenge.albumcollector.ui.screens.listScreen.ListScreen
 
 @Composable
 internal fun Navigation() {
@@ -13,10 +13,11 @@ internal fun Navigation() {
 
     NavHost(navController = navController, startDestination = Screens.ListScreen.name) {
         composable(Screens.ListScreen.name) {
-            ListScreen(navController)
+            ListScreen(navController = navController)
         }
+
         composable(Screens.DetailsScreen.name) {
-            DetailsScreen(navController)
+            DetailsScreen(navController = navController)
         }
     }
 }

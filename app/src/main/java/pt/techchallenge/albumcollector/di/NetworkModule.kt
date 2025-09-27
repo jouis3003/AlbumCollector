@@ -6,13 +6,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import pt.techchallenge.albumcollector.data.network.AlbumApi
+import pt.techchallenge.albumcollector.data.repository.AlbumRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitModule {
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -39,5 +40,11 @@ object RetrofitModule {
     @Singleton
     fun provideAlbumApi(retrofit: Retrofit): AlbumApi {
         return retrofit.create(AlbumApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAlbumRepository(albumApi: AlbumApi): AlbumRepository {
+        return AlbumRepository(albumApi)
     }
 }

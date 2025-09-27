@@ -12,10 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import pt.techchallenge.albumcollector.R
 
 @Composable
-internal fun TopBar(isBackButtonVisible: Boolean = true) {
+internal fun TopBar(navController: NavController, isBackButtonVisible: Boolean = true) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -26,7 +27,7 @@ internal fun TopBar(isBackButtonVisible: Boolean = true) {
         navigationIcon = {
             if (isBackButtonVisible) {
                 IconButton(onClick = {
-                    //TODO: Navigate back
+                    navController.popBackStack()
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,

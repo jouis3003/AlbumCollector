@@ -1,4 +1,4 @@
-package pt.techchallenge.albumcollector.ui.screens
+package pt.techchallenge.albumcollector.ui.screens.detailsScreen
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
