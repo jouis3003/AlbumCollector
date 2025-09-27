@@ -31,6 +31,7 @@ Added libraries
 - Navigation for navigation between screens - Jetpack Navigation provides type-safe navigation between screens and compile-time route validation. (https://developer.android.com/develop/ui/compose/navigation)
 - Coil for image loading - Coil allows me to load images during the app's runtime. (https://coil-kt.github.io/coil/)
 - Retrofit for networking - Retrofit is a type-safe HTTP client for Android that simplifies API calls with automatic JSON parsing. (https://github.com/square/retrofit)
+- Room for database operations - Room is a persistence library for Android that provides an abstraction layer over SQLite. (https://developer.android.com/training/data-storage/room)
 - Mockk for testing - Mockk is a mocking library with Native Kotlin support. (https://github.com/mockk/mockk)
 
 I've created the theme for this app using this theme builder - https://material-foundation.github.io/material-theme-builder/
