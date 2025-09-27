@@ -25,9 +25,10 @@ The project will have 3 main packages: data, di and ui
 
 Added libraries
 
-- MaterialIcons will allow me to have access to a broader range of material icons.
+- MaterialIcons will allow me to have access to a broader range of material icons. (https://developer.android.com/reference/kotlin/androidx/compose/material/icons/package-summary)
 - Hilt for dependency injection - Hilt is Google's recommended DI library for Jetpack Compose. (https://developer.android.com/training/dependency-injection#hilt)
-- Coroutines for asynchronous programming - Kotlin's Coroutines provide a clean and efficient way to handle asynchronous operations. I will mainly use them for network requests and database operations.
-- Navigation for navigation between screens - Jetpack Navigation provides type-safe navigation between screens and compile-time route validation.
-- Coil for image loading - Coil allows me to load images during the app's runtime.
-- Mockk for testing - Mockk is a mocking library with Native Kotlin support.
+- Coroutines for asynchronous programming - Kotlin's Coroutines provide a clean and efficient way to handle asynchronous operations. I will mainly use them for network requests and database operations. (https://developer.android.com/kotlin/coroutines)
+- Navigation for navigation between screens - Jetpack Navigation provides type-safe navigation between screens and compile-time route validation. (https://developer.android.com/develop/ui/compose/navigation)
+- Coil for image loading - Coil allows me to load images during the app's runtime. (https://coil-kt.github.io/coil/)
+- Retrofit for networking - Retrofit is a type-safe HTTP client for Android that simplifies API calls with automatic JSON parsing. (https://github.com/square/retrofit)
+- Mockk for testing - Mockk is a mocking library with Native Kotlin support. (https://github.com/mockk/mockk)
