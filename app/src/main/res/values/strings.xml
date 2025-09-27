@@ -7,4 +7,6 @@
 
     <!-- List Screen -->
     <string name="list_screen_title">Album Collector</string>
+    <string name="empty_collection">Empty Collection</string>
+    <string name="error_loading_collection">Error Loading Your Collection.</string>
 </resources>

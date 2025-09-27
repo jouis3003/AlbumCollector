@@ -25,7 +25,7 @@ class ListScreenViewModel @Inject constructor(private val albumRepository: Album
 
     private fun loadAlbums() {
         viewModelScope.launch {
-            _albums.value = _albums.value.copy(isLoading = true)
+            _albums.value = DataWrapper(data = null, isLoading = true, error = null)
             _albums.value = albumRepository.getAlbums()
         }
     }

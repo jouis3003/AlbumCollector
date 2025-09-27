@@ -2,6 +2,7 @@ package pt.techchallenge.albumcollector.ui.screens.listScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -47,15 +50,37 @@ private fun ListScreenContent(navController: NavController, viewModel: ListScree
         }
     ) { innerPadding ->
 
-        LazyColumn(
+        Box(
             modifier = Modifier
                 .padding(paddingValues = innerPadding)
                 .padding(all = 16.dp)
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(space = 16.dp)
+            contentAlignment = Alignment.Center
         ) {
-            items(items = albums.data ?: emptyList()) {
-                AlbumItem(album = it)
+            if (albums.isLoading == true) {
+                CircularProgressIndicator()
+
+            } else if (albums.error != null) {
+                Text(
+                    text = stringResource(id = R.string.error_loading_collection),
+                    style = MaterialTheme.typography.labelLarge
+                )
+
+            } else if (albums.data.isNullOrEmpty()) {
+                Text(
+                    text = stringResource(id = R.string.empty_collection),
+                    style = MaterialTheme.typography.labelLarge
+                )
+
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(space = 16.dp)
+                ) {
+                    items(items = albums.data ?: emptyList()) {
+                        AlbumItem(album = it)
+                    }
+                }
             }
         }
     }
