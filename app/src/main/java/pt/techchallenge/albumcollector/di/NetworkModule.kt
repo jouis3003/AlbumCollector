@@ -5,8 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import pt.techchallenge.albumcollector.data.database.AlbumDao
 import pt.techchallenge.albumcollector.data.network.AlbumApi
-import pt.techchallenge.albumcollector.data.repository.AlbumRepository
+import pt.techchallenge.albumcollector.data.repositories.AlbumRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -19,7 +20,8 @@ object NetworkModule {
     @Singleton
     fun provideRetrofitClient(): Retrofit {
         //Got this user agent from https://www.whatismybrowser.com/guides/the-latest-user-agent/android
-        val userAgent = "Mozilla/5.0 (Linux; Android 16) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.7339.208 Mobile Safari/537.36"
+        val userAgent =
+            "Mozilla/5.0 (Linux; Android 16) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.7339.208 Mobile Safari/537.36"
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
@@ -40,11 +42,5 @@ object NetworkModule {
     @Singleton
     fun provideAlbumApi(retrofit: Retrofit): AlbumApi {
         return retrofit.create(AlbumApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAlbumRepository(albumApi: AlbumApi): AlbumRepository {
-        return AlbumRepository(albumApi)
     }
 }

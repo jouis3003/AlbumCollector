@@ -7,12 +7,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import pt.techchallenge.albumcollector.data.models.Album
-import pt.techchallenge.albumcollector.data.repository.AlbumRepository
+import pt.techchallenge.albumcollector.data.repositories.AlbumRepository
 import pt.techchallenge.albumcollector.data.wrapper.DataWrapper
 import javax.inject.Inject
 
 @HiltViewModel
-class ListScreenViewModel @Inject constructor(private val albumRepository: AlbumRepository) :
+class ListScreenViewModel @Inject constructor(
+    private val albumRepository: AlbumRepository
+) :
     ViewModel() {
 
     private val _albums =
@@ -25,8 +27,10 @@ class ListScreenViewModel @Inject constructor(private val albumRepository: Album
 
     private fun loadAlbums() {
         viewModelScope.launch {
-            _albums.value = DataWrapper(data = null, isLoading = true, error = null)
-            _albums.value = albumRepository.getAlbums()
+            albumRepository.refreshAlbumsFromNetwork()
+            albumRepository.getAlbumsFromDatabase().collect { albumList ->
+                _albums.value = DataWrapper(data = albumList, isLoading = false, error = null)
+            }
         }
     }
 }
