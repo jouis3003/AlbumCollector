@@ -18,8 +18,13 @@ class AlbumRepository @Inject constructor(
         return albumDao.getAllAlbums()
     }
 
-    suspend fun refreshAlbumsFromNetwork() {
-        val albums = albumApi.getAlbums()
-        albumDao.insertAlbums(albums)
+    suspend fun refreshAlbumsFromNetwork(): Result<Unit> {
+        return try {
+            val albums = albumApi.getAlbums()
+            albumDao.insertAlbums(albums)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

@@ -32,7 +32,15 @@ class ListScreenViewModel @Inject constructor(
     private fun loadAlbums() {
         viewModelScope.launch {
             if (NetworkUtils.isNetworkAvailable(context)) {
-                albumRepository.refreshAlbumsFromNetwork()
+                val result = albumRepository.refreshAlbumsFromNetwork()
+                if (result.isFailure) {
+                    _albums.value = DataWrapper(
+                        data = null,
+                        isLoading = false,
+                        error = result.exceptionOrNull() as? Exception
+                    )
+                    return@launch
+                }
             }
             albumRepository.getAlbumsFromDatabase().collect { albumList ->
                 _albums.value = DataWrapper(data = albumList, isLoading = false, error = null)
