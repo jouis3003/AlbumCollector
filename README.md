@@ -36,3 +36,6 @@ Added libraries
 
 I've created the theme for this app using this theme builder - https://material-foundation.github.io/material-theme-builder/
 This generator creates the Color.kt, Theme.kt and Type.kt files that I've used in the project.
+
+
+I've created unit tests for every class inside the data package with the exclusion of the database classes. These I've decided to test using Android Tests so I can test the actual database operations instead of mocking them.

@@ -20,7 +20,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //Because we're using Hilt for dependency injection, we need to use a custom test runner
+        testInstrumentationRunner = "pt.techchallenge.albumcollector.HiltTestRunner"
     }
 
     buildTypes {
@@ -51,6 +52,7 @@ android {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
+
     buildFeatures {
         compose = true
     }
