@@ -4,6 +4,7 @@
     <!-- Content Descriptions -->
     <string name="arrow_back_icon">Arrow Back Icon</string>
     <string name="album_image">Album Image</string>
+    <string name="loading_indicator">Loading Indicator</string>
 
     <!-- List Screen -->
     <string name="list_screen_title">Album Collector</string>
