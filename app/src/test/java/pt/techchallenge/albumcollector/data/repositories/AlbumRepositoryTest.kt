@@ -60,7 +60,7 @@ class AlbumRepositoryTest {
             Album(2, 2, "title2", "url2", "thumbnailUrl2")
         )
         coEvery { albumApi.getAlbums() } returns Response.success(albums)
-        coEvery { albumDao.insertAlbums(albums) } returns Unit
+        coEvery { albumDao.insertAlbums(any()) } returns Unit
 
         val result = albumRepository.refreshAlbumsFromNetwork()
 
@@ -90,7 +90,7 @@ class AlbumRepositoryTest {
         )
         val exception = Exception("Database error")
         coEvery { albumApi.getAlbums() } returns Response.success(albums)
-        coEvery { albumDao.insertAlbums(albums) } throws exception
+        coEvery { albumDao.insertAlbums(any()) } throws exception
 
         val result = albumRepository.refreshAlbumsFromNetwork()
 
@@ -98,5 +98,38 @@ class AlbumRepositoryTest {
         assertEquals(exception, result.exceptionOrNull())
         coVerify { albumApi.getAlbums() }
         coVerify { albumDao.insertAlbums(albums) }
+    }
+
+    @Test
+    fun `refreshAlbumsFromNetwork should filter out null albums`() = runTest {
+        val albums = listOf(
+            Album(1, 1, "title", "url", "thumbnailUrl"),
+            Album(2, 2, "title2", "url2", "thumbnailUrl2"),
+            null
+        )
+        val filteredAlbums = listOf(
+            Album(1, 1, "title", "url", "thumbnailUrl"),
+            Album(2, 2, "title2", "url2", "thumbnailUrl2")
+        )
+        coEvery { albumApi.getAlbums() } returns Response.success(albums)
+        coEvery { albumDao.insertAlbums(any()) } returns Unit
+
+        val result = albumRepository.refreshAlbumsFromNetwork()
+
+        assertEquals(Result.success(Unit), result)
+        coVerify { albumApi.getAlbums() }
+        coVerify { albumDao.insertAlbums(filteredAlbums) }
+    }
+
+    @Test
+    fun `refreshAlbumsFromNetwork should handle null response`() = runTest {
+        coEvery { albumApi.getAlbums() } returns Response.success(null)
+        coEvery { albumDao.insertAlbums(any()) } returns Unit
+
+        val result = albumRepository.refreshAlbumsFromNetwork()
+
+        assertEquals(Result.success(Unit), result)
+        coVerify { albumApi.getAlbums() }
+        coVerify { albumDao.insertAlbums(emptyList()) }
     }
 }
