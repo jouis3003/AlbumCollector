@@ -15,6 +15,7 @@ import org.junit.Test
 import pt.techchallenge.albumcollector.data.database.AlbumDao
 import pt.techchallenge.albumcollector.data.models.Album
 import pt.techchallenge.albumcollector.data.network.AlbumApi
+import retrofit2.Response
 
 class AlbumRepositoryTest {
 
@@ -58,7 +59,7 @@ class AlbumRepositoryTest {
             Album(1, 1, "title", "url", "thumbnailUrl"),
             Album(2, 2, "title2", "url2", "thumbnailUrl2")
         )
-        coEvery { albumApi.getAlbums() } returns albums
+        coEvery { albumApi.getAlbums() } returns Response.success(albums)
         coEvery { albumDao.insertAlbums(albums) } returns Unit
 
         val result = albumRepository.refreshAlbumsFromNetwork()
@@ -88,7 +89,7 @@ class AlbumRepositoryTest {
             Album(2, 2, "title2", "url2", "thumbnailUrl2")
         )
         val exception = Exception("Database error")
-        coEvery { albumApi.getAlbums() } returns albums
+        coEvery { albumApi.getAlbums() } returns Response.success(albums)
         coEvery { albumDao.insertAlbums(albums) } throws exception
 
         val result = albumRepository.refreshAlbumsFromNetwork()

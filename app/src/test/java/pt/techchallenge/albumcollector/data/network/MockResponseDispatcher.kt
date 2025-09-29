@@ -64,7 +64,8 @@ class MockResponseDispatcher: Dispatcher() {
             "title": "album with null id - should be filtered out",
             "url": "https://placehold.co/600x600/92c952/white/png",
             "thumbnailUrl": "https://placehold.co/150x150/92c952/white/png"
-          }
+          },
+          null
         ]
         """.trimIndent()
     }
