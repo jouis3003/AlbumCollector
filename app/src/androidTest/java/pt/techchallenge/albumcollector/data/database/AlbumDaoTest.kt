@@ -70,4 +70,24 @@ class AlbumDaoTest {
         assertEquals(1, result.size)
         assertEquals(album2, result[0])
     }
+
+    @Test
+    fun insertAlbums_with_null_values_should_work() = runTest {
+        val albums = listOf(
+            Album(null, 1, "title", "url", "thumbnailUrl"),
+            Album(2, 2, null, "url", "thumbnailUrl"),
+            Album(3, 3, "title", null, "thumbnailUrl"),
+            Album(4, 4, "title", "url", null)
+        )
+
+        albumDao.insertAlbums(albums)
+
+        val result = albumDao.getAllAlbums().first()
+
+        assertEquals(4, result.size)
+        assertEquals(albums[0], result[0])
+        assertEquals(albums[1], result[1])
+        assertEquals(albums[2], result[2])
+        assertEquals(albums[3], result[3])
+    }
 }

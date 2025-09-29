@@ -10,7 +10,7 @@ import pt.techchallenge.albumcollector.data.models.Album
 @Dao
 interface AlbumDao {
 
-    @Query("SELECT * FROM albums")
+    @Query("SELECT * FROM albums WHERE id IS NOT NULL")
     fun getAllAlbums(): Flow<List<Album>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

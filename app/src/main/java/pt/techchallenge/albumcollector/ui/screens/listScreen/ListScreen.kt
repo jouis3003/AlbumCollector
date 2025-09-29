@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -101,17 +104,29 @@ private fun AlbumItem(album: Album) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(space = 16.dp)
         ) {
-            //Coil Composable that allows loading images asynchronously
-            //https://coil-kt.github.io/coil/compose/#subcomposeasyncimage
-            SubcomposeAsyncImage(
-                model = album.thumbnailUrl,
-                loading = {
-                    CircularProgressIndicator()
-                },
-                contentDescription = stringResource(id = R.string.album_image)
-            )
 
-            Text(text = album.title, style = MaterialTheme.typography.bodyLarge)
+            if (album.thumbnailUrl == null) {
+                Icon(
+                    imageVector = Icons.Filled.PlayArrow,
+                    contentDescription = stringResource(id = R.string.album_image_placeholder)
+                )
+            } else {
+                //Coil Composable that allows loading images asynchronously
+                //https://coil-kt.github.io/coil/compose/#subcomposeasyncimage
+                SubcomposeAsyncImage(
+                    model = album.thumbnailUrl,
+                    loading = {
+                        CircularProgressIndicator()
+                    },
+                    contentDescription = stringResource(id = R.string.album_image)
+                )
+            }
+
+            //If title is null, show a default text
+            Text(
+                text = album.title ?: stringResource(id = R.string.album_unknown_title),
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }

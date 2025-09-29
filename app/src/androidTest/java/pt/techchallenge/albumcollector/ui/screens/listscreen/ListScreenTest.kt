@@ -1,8 +1,10 @@
 package pt.techchallenge.albumcollector.ui.screens.listscreen
 
 import android.content.Context
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.ComposeNavigator
@@ -138,7 +140,7 @@ class ListScreenTest {
     }
 
     @Test
-    fun list_screen_should_display_albums_when_data_is_available() {
+    fun list_screen_should_display_albums_when_data_is_available_and_valid() {
         val albums = listOf(
             Album(1, 1, "title", "url", "thumbnailUrl"),
             Album(2, 2, "title2", "url2", "thumbnailUrl2")
@@ -150,13 +152,75 @@ class ListScreenTest {
         }
 
         //Test that only the albums are visible
-        composeTestRule.onNodeWithText(albums[0].title).assertIsDisplayed()
-        composeTestRule.onNodeWithText(albums[1].title).assertIsDisplayed()
+        composeTestRule.onNodeWithText(albums[0].title!!).assertIsDisplayed()
+        composeTestRule.onNodeWithText(albums[1].title!!).assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.album_unknown_title))
+            .assertDoesNotExist()
+        composeTestRule.onAllNodesWithContentDescription(context.getString(R.string.album_image))
+            .assertCountEquals(2)
+        composeTestRule.onNodeWithText(context.getString(R.string.album_image_placeholder))
+            .assertDoesNotExist()
         composeTestRule.onNodeWithText(context.getString(R.string.error_loading_collection))
             .assertDoesNotExist()
         composeTestRule.onNodeWithText(context.getString(R.string.empty_collection))
             .assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription(context.getString(R.string.loading_indicator))
+            .assertDoesNotExist()
+    }
+
+    @Test
+    fun list_screen_should_display_album_with_unknown_title_when_title_is_null() {
+        val albums = listOf(
+            Album(1, 1, null, "url", "thumbnailUrl")
+        )
+        every { mockViewModel.albums } returns MutableStateFlow(DataWrapper(data = albums))
+
+        composeTestRule.setContent {
+            ListScreen(navController = navController, viewModel = mockViewModel)
+        }
+
+        composeTestRule.onNodeWithText(context.getString(R.string.album_unknown_title))
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithContentDescription(context.getString(R.string.album_image))
+            .assertCountEquals(1)
+        composeTestRule.onNodeWithText(context.getString(R.string.album_image_placeholder))
+            .assertDoesNotExist()
+    }
+
+    @Test
+    fun list_screen_should_display_album_with_placeholder_when_thumbnail_is_null() {
+        val albums = listOf(
+            Album(1, 1, "title", "url", null)
+        )
+        every { mockViewModel.albums } returns MutableStateFlow(DataWrapper(data = albums))
+
+        composeTestRule.setContent {
+            ListScreen(navController = navController, viewModel = mockViewModel)
+        }
+
+        composeTestRule.onNodeWithText(albums[0].title!!).assertIsDisplayed()
+        composeTestRule.onAllNodesWithContentDescription(context.getString(R.string.album_image_placeholder))
+            .assertCountEquals(1)
+        composeTestRule.onNodeWithText(context.getString(R.string.album_image))
+            .assertDoesNotExist()
+    }
+
+    @Test
+    fun list_screen_should_display_album_with_placeholder_and_unknown_title_when_both_thumbnail_and_title_are_null() {
+        val albums = listOf(
+            Album(1, 1, null, "url", null)
+        )
+        every { mockViewModel.albums } returns MutableStateFlow(DataWrapper(data = albums))
+
+        composeTestRule.setContent {
+            ListScreen(navController = navController, viewModel = mockViewModel)
+        }
+
+        composeTestRule.onNodeWithText(context.getString(R.string.album_unknown_title))
+            .assertIsDisplayed()
+        composeTestRule.onAllNodesWithContentDescription(context.getString(R.string.album_image_placeholder))
+            .assertCountEquals(1)
+        composeTestRule.onNodeWithText(context.getString(R.string.album_image))
             .assertDoesNotExist()
     }
 }

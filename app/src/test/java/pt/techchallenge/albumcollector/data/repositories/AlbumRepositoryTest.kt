@@ -76,7 +76,7 @@ class AlbumRepositoryTest {
         val result = albumRepository.refreshAlbumsFromNetwork()
 
         assertTrue(result.isFailure)
-        assertEquals(exception, result)
+        assertEquals(exception, result.exceptionOrNull())
         coVerify { albumApi.getAlbums() }
         coVerify(exactly = 0) { albumDao.insertAlbums(any()) }
     }
@@ -94,7 +94,7 @@ class AlbumRepositoryTest {
         val result = albumRepository.refreshAlbumsFromNetwork()
 
         assertTrue(result.isFailure)
-        assertEquals(exception, result)
+        assertEquals(exception, result.exceptionOrNull())
         coVerify { albumApi.getAlbums() }
         coVerify { albumDao.insertAlbums(albums) }
     }

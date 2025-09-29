@@ -21,7 +21,8 @@ class AlbumRepository @Inject constructor(
     suspend fun refreshAlbumsFromNetwork(): Result<Unit> {
         return try {
             val albums = albumApi.getAlbums()
-            albumDao.insertAlbums(albums)
+            val validAlbums = albums.filter { it.id != null }
+            albumDao.insertAlbums(validAlbums)
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

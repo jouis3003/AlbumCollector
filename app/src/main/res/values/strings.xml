@@ -4,10 +4,12 @@
     <!-- Content Descriptions -->
     <string name="arrow_back_icon">Arrow Back Icon</string>
     <string name="album_image">Album Image</string>
+    <string name="album_image_placeholder">Album Image Placeholder</string>
     <string name="loading_indicator">Loading Indicator</string>
 
     <!-- List Screen -->
     <string name="list_screen_title">Album Collector</string>
     <string name="empty_collection">Empty Collection</string>
     <string name="error_loading_collection">Error Loading Your Collection.</string>
+    <string name="album_unknown_title">Unknown Title</string>
 </resources>

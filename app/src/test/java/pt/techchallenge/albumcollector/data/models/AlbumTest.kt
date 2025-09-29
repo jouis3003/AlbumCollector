@@ -18,6 +18,17 @@ class AlbumTest {
     }
 
     @Test
+    fun `album creation with null data should succeed`() {
+        val album = Album(null, null, null, null, null)
+
+        assertEquals(null, album.albumId)
+        assertEquals(null, album.id)
+        assertEquals(null, album.title)
+        assertEquals(null, album.url)
+        assertEquals(null, album.thumbnailUrl)
+    }
+
+    @Test
     fun `albums with same data should be equal`() {
         val album1 = Album(1, 1, "title", "url", "thumbnailUrl")
         val album2 = Album(1, 1, "title", "url", "thumbnailUrl")
