@@ -1,0 +1,17 @@
+<!-- Translated using https://www.deepl.com/ -->
+<!-- I'm sorry in advance if the translation is not perfect -->
+<resources>
+    <string name="app_name">AlbumCollector</string>
+
+    <!-- Content Descriptions -->
+    <string name="arrow_back_icon">Icône Flèche Retour</string>
+    <string name="album_image">Image de L\'album</string>
+    <string name="album_image_placeholder">Placeholder de L\'image de L\'album</string>
+    <string name="loading_indicator">Indicateur de Chargement</string>
+
+    <!-- List Screen -->
+    <string name="list_screen_title">Collectionneur d\'albums</string>
+    <string name="empty_collection">Collection Vide</string>
+    <string name="error_loading_collection">Erreur Lors du Chargement de Votre Collection.</string>
+    <string name="album_unknown_title">Titre Inconnu</string>
+</resources>

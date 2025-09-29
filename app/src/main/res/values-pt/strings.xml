@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">AlbumCollector</string>
+
+    <!-- Content Descriptions -->
+    <string name="arrow_back_icon">Ícone Seta para Trás</string>
+    <string name="album_image">Imagem do Álbum</string>
+    <string name="album_image_placeholder">Placeholder da Imagem do Álbum</string>
+    <string name="loading_indicator">Indicador de Carregamento</string>
+
+    <!-- List Screen -->
+    <string name="list_screen_title">Colecionador de Álbuns</string>
+    <string name="empty_collection">Coleção Vazia</string>
+    <string name="error_loading_collection">Erro ao Carregar a Sua Coleção</string>
+    <string name="album_unknown_title">Título Desconhecido</string>
+</resources>
