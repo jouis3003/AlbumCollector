@@ -4,38 +4,168 @@ This project was developed using Android Studio Narwhal 3 Feature Drop | 2025.1.
 When testing use the same or a newer version in order to avoid any compatibility issues with AGP.
 
 In this README file I will present the justifications for the choices made by me in the project
+## Project Overview
 
-Jetpack Compose over XML layout files
+This project was developed using modern Android development practices, using a clean architecture approach with Jetpack Compose UI. 
+This README will present the technical decisions and justifications for the choices made throughout the project.
 
-Jetpack Compose allows me to use:
-    - Declarative UI Programming - this leads to less boilerplate as with XML you would often need to have multiple files/classes for a single view (for example - RecyclerView)
-    - Type Safety - the whole code is done in Kotlin
-    - Compile-time validation for UI - XML often provides almost no compile-time validation causing runtime crashes
-    - Better Performance - Compose only updates parts of the UI that actually need to change while XML often requires the whole hierarchy to update
-    - Very easy integration with Material3
-    - Future-Proof - Google is investing heavily in Compose and it's bound to be the future of Android UI development
+## Architecture Decisions
 
+### Clean Architecture + MVVM Pattern
 
-Architecture 
+I've implemented a hybrid architecture combining Clean Architecture principles with the MVVM pattern:
 
-I've decided to use an architecture based on the Clean Architecture Pattern and the MVVM Pattern.
+**Package Structure:**
+- `data` - Data layer handling repositories, network calls, and database operations
+- `di` - Dependency injection modules using Hilt
+- `ui` - UI layer with ViewModels, Composables and navigation
 
-The project will have 3 main packages: data, di and ui
+**Benefits:**
+- **Separation of Concerns**: Each layer has a single responsibility
+- **Testability**: Business logic is isolated and easily testable
+- **Maintainability**: Changes in one layer don't affect others
+- **Scalability**: Easy to add new features without breaking existing code
 
+### UI Technology Choice: Jetpack Compose over XML
 
-Added libraries
+**Justifications:**
+- **Declarative UI Programming**: Reduces boilerplate compared to XML
+- **Type Safety**: Everything is written in Kotlin, eliminating XML-related runtime errors
+- **Compile-time Validation**: Catches UI errors at compile time rather than runtime
+- **Performance**: Compose's recomposition system only updates changed UI parts
+- **Material3 Integration**: Seamless theming and component integration
+- **Future-Proof**: Google's strategic direction for Android UI development
 
-- MaterialIcons will allow me to have access to a broader range of material icons. (https://developer.android.com/reference/kotlin/androidx/compose/material/icons/package-summary)
-- Hilt for dependency injection - Hilt is Google's recommended DI library for Jetpack Compose. (https://developer.android.com/training/dependency-injection#hilt)
-- Coroutines for asynchronous programming - Kotlin's Coroutines provide a clean and efficient way to handle asynchronous operations. I will mainly use them for network requests and database operations. (https://developer.android.com/kotlin/coroutines)
-- Navigation for navigation between screens - Jetpack Navigation provides type-safe navigation between screens and compile-time route validation. (https://developer.android.com/develop/ui/compose/navigation)
-- Coil for image loading - Coil allows me to load images during the app's runtime. (https://coil-kt.github.io/coil/)
-- Retrofit for networking - Retrofit is a type-safe HTTP client for Android that simplifies API calls with automatic JSON parsing. (https://github.com/square/retrofit)
-- Room for database operations - Room is a persistence library for Android that provides an abstraction layer over SQLite. (https://developer.android.com/training/data-storage/room)
-- Mockk for testing - Mockk is a mocking library with Native Kotlin support. (https://github.com/mockk/mockk)
+## Library Choices & Justifications
 
-I've created the theme for this app using this theme builder - https://material-foundation.github.io/material-theme-builder/
-This generator creates the Color.kt, Theme.kt and Type.kt files that I've used in the project.
+### Dependency Injection
+**Hilt**
+- Google's recommended DI solution for Android
+- Simplified Compose integration with `hiltViewModel()`
+- Simplified testing with `@HiltAndroidTest`
+- Reduces boilerplate compared to manual DI or Dagger
 
+### Asynchronous Programming
+**Kotlin Coroutines**
+- Native Kotlin asynchronous programming
+- Perfect integration with Compose's `collectAsState()`
+- Structured concurrency prevents memory leaks
+- Clean error handling with try-catch blocks
+- Essential for network calls and database operations
+- Superior to RxJava for Kotlin projects
 
-I've created unit tests for every class inside the data package with the exclusion of the database classes. These I've decided to test using Android Tests so I can test the actual database operations instead of mocking them.
+### Navigation
+**Navigation Compose**
+- Type-safe navigation between screens
+- Compile-time route validation
+- Deep linking support (it was not used in this project)
+- Seamless integration with Compose lifecycle
+
+**Hilt Navigation Compose**
+- Automatic ViewModel injection with `hiltViewModel()`
+- Scoped ViewModels to navigation destinations
+- Eliminates manual ViewModel factory creation
+
+**Lifecycle ViewModel Compose**
+- Automatic ViewModel lifecycle management
+- Survives configuration changes
+- Integration with Compose state management
+- Reactive UI updates with `collectAsState()`
+
+### Networking
+**Retrofit**
+- Industry standard for Android networking
+- Type-safe API definitions with interfaces
+- Automatic JSON parsing integration
+- Excellent error handling and testing support
+- Superior to manual HttpURLConnection
+
+**Retrofit Gson Converter (3.0.0)**
+- Automatic JSON serialization/deserialization
+- Seamless integration with Retrofit
+- Handles complex nested objects
+
+**OkHttp**
+- HTTP client underlying Retrofit
+- Interceptor support for headers (User-Agent in `NetworkModule`)
+
+### Database
+**Room**
+- Google's recommended persistence solution
+- Compile-time SQL validation prevents runtime crashes
+- Coroutines support with `Flow` for reactive data
+- Migration support for schema changes
+- Type-safe database operations
+
+### Image Loading
+**Coil**
+- Modern Kotlin-first image loading library
+- Native Compose integration with `AsyncImage`
+- Automatic memory and disk caching
+- Lightweight compared to Glide or Picasso
+- Coroutines-based for better async handling
+
+### UI Components
+**Material Icons**
+- Access to comprehensive Material Design icon set
+- Vector-based icons able to render at any size
+- Consistent with Material Design guidelines
+- Reduces need for custom icon assets
+
+### Testing Libraries
+**MockK**
+- Native Kotlin mocking library
+- Better syntax than Mockito for Kotlin
+- Support for coroutines and suspend functions
+- Relaxed mocks reduce boilerplate
+
+**MockWebServer**
+- OkHttp's official testing server
+- Mock HTTP responses for network testing
+- Integration testing for API calls
+- Better than mocking Retrofit directly
+
+**Coroutines Test**
+- Testing utilities for coroutines
+- `runTest` for testing suspend functions
+- `TestDispatcher` for controlled execution
+- Essential for testing async operations
+
+**Navigation Testing Android**
+- Testing utilities for Navigation Compose
+- Verify navigation behavior in isolation
+- Test deep links and navigation arguments (not used in this project)
+
+**Room Testing**
+- In-memory database for testing
+- Fast test execution without file I/O
+- Real database behavior without persistence
+
+**Hilt Android Testing**
+- Testing support for Hilt dependency injection
+- Integration with Android instrumentation tests
+
+## Design System & Theming
+
+**Material Theme Builder Integration**
+- Generated theme using [Material Theme Builder](https://material-foundation.github.io/material-theme-builder/)
+- Creates consistent `Color.kt`, `Theme.kt`, and `Type.kt` files
+- Ensures Material Design 3 compliance
+- Provides both light and dark theme variants
+- Maintains accessibility standards with proper contrast ratios
+
+## Testing Strategy
+
+### Unit Tests
+**Scope**: All classes in the `data` package (except DAOs) + ViewModels from `ui` package
+- **Data Layer**: Repository implementations, network mappers, utility classes
+- **ViewModels**: Business logic, state management, user interactions
+- **Benefits**: Fast execution, no Android dependencies, isolated testing
+
+### Android Instrumentation Tests
+**Scope**: Database classes + UI Composables
+- **Database**: Room DAOs, database migrations, actual SQLite operations
+- **UI Components**: Compose screens, navigation behavior, user interactions
+- **Benefits**: Real Android environment, actual database operations, UI rendering validation
+
+**Testing Philosophy**: Test components in their natural environment - ViewModels don't need Android context (unit tests), while databases and UI require Android runtime (instrumentation tests).
